@@ -59,6 +59,7 @@
     <None Include="App.config" />
     <Content Include="packages.config" />
     <None Include="Config.yaml" />
+    <None Include="DemoConfig.yaml" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Configuration">

@@ -1,0 +1,3 @@
+﻿Azure:
+    ConnectionString: [AzureIotHubConnectionString]
+#save this file as Config.yaml

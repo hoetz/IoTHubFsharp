@@ -22,6 +22,9 @@ let main argv =
     
     let cts = new CancellationTokenSource()
 
+    let iWantToExit()=
+        cts.IsCancellationRequested
+
     let actionOnCancel s (e : System.ConsoleCancelEventArgs) =
         e.Cancel <- true
         cts.Cancel()
@@ -31,11 +34,7 @@ let main argv =
     
     let ReceiveMessagesFromDeviceAsync (partition:string) (ct:CancellationToken)=async{
         let eventHubReceiver = eventHubClient.GetDefaultConsumerGroup().CreateReceiver(partition, DateTime.UtcNow)
-        let mutable continueLooping = true
-        //this feels wrong
-        while continueLooping do
-            if ct.IsCancellationRequested then
-                continueLooping <- false
+        while iWantToExit()=false do
             let! eventData = eventHubReceiver.ReceiveAsync() |> Async.AwaitTask
             match eventData with
                 | null -> ()

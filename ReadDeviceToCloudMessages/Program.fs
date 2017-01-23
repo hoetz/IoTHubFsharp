@@ -40,14 +40,12 @@ let main argv =
                 | null -> ()
                 | _ -> printfn "%s" (System.Text.Encoding.UTF8.GetString(eventData.GetBytes()))
             }
-    let mutable tasks = []
+
     let d2cPartitions = eventHubClient.GetRuntimeInformation().PartitionIds
-    for part in d2cPartitions do
-        let tsk=ReceiveMessagesFromDeviceAsync part cts.Token |> Async.StartAsTask
-        tasks<-List.append tasks [tsk]
+    let myReceiverTasks=d2cPartitions |> Seq.map(fun partition -> ReceiveMessagesFromDeviceAsync partition cts.Token |> Async.StartAsTask)
     
     printfn "Waiting on events...."
-    Task.WaitAll tasks
+    Task.WaitAll myReceiverTasks
         
     
     0 // return an integer exit code

@@ -24,11 +24,6 @@ let main argv =
 
     let iWantToExit()=
         cts.IsCancellationRequested
-
-    let actionOnCancel s (e : System.ConsoleCancelEventArgs) =
-        e.Cancel <- true
-        cts.Cancel()
-        System.Console.WriteLine("Exiting...")
         
     System.Console.CancelKeyPress.Add(fun arg ->arg.Cancel <- true; cts.Cancel(); printfn "CancelKeyPress";  ) 
     

@@ -1,0 +1,5 @@
+﻿#save this file as Config.yaml
+Azure:
+    ConnectionString: [AzureConString]
+    HubHostName: xxxx
+    DeviceKey: xxxxx
